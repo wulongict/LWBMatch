@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.2)
+project(mzXMLReader)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -fpermissive ")
+set (CMAKE_CXX_LINK_FLAGS "-lz")
+
+
+
+
+#set( PROJECT_LINK_LIBS libmsms.so )
+link_directories( ../Release/ ) # lib1.so and lib2.so are there.
+link_directories(/usr/local/lib/)
+
+add_executable(mzXMLReader ReadmzXML.cpp)
+target_link_libraries(mzXMLReader -lz -pthread -lmsms -lboost_program_options)
+
+add_dependencies(mzXMLReader msms)

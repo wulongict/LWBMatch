@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PeakList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PeakList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SWATHmzXMLReader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SWATHmzXMLReader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_base64.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_base64.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_cramp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_cramp.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_ramp.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SpectraST_ramp.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Util.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Util.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mzXMLReader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mzXMLReader.h" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include" />
+          <root url="file:///usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed" />
+          <root url="file:///usr/local/include" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

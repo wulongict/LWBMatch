@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_qb8akM37EdqwVrslYOdUDA" name="recallprecision">
+  <eAnnotations xmi:id="_KW5eAcYmEd-dJYwkGUnvHA" source="http://www.topcased.org/reverse">
+    <details xmi:id="_RmM9UMYmEd-dJYwkGUnvHA" key="PROJECT_CHARSET" value="UTF-8"/>
+  </eAnnotations>
+  <packagedElement xmi:type="uml:Package" xmi:id="_w8IxIM37EdqwVrslYOdUDA" name="Use Case View">
+    <packagedElement xmi:type="uml:Package" xmi:id="_Oug3IIBpEduoHLDxP0HEYA" name="Actors"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_R1l80IBpEduoHLDxP0HEYA" name="Analysis Classes"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_47DVYIBpEduoHLDxP0HEYA" name="Domain Classes"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="__ftVMIBpEduoHLDxP0HEYA" name="External Entities">
+      <packagedElement xmi:type="uml:Interaction" xmi:id="_xkzEEIBqEduoHLDxP0HEYA" name="External Entities Dynamic Data Flow General view"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interaction" xmi:id="_eruFQIBqEduoHLDxP0HEYA" name="Data Flow General View"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_gSuC0IBrEduoHLDxP0HEYA" name="MySystem">
+      <nestedClassifier xmi:type="uml:StateMachine" xmi:id="_uFnK8IBrEduoHLDxP0HEYA" name="MySystem Behavioural"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:UseCase" xmi:id="_GPdf0IBsEduoHLDxP0HEYA" name="AUseCase">
+      <ownedBehavior xmi:type="uml:Interaction" xmi:id="_I859gIBsEduoHLDxP0HEYA" name="ASequenceDiagram"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_4UHtsIBoEduoHLDxP0HEYA" name="Logical View">
+    <packagedElement xmi:type="uml:Package" xmi:id="_LLvlME0uEd-ONPwW9OyryA" name="Source Artefacts">
+      <packagedElement xmi:type="uml:Class" xmi:id="_U5DMACZHEeWjSJUy2aREuQ" name="CalculateRecallPrecision" visibility="private">
+        <eAnnotations xmi:id="_U5J5sCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U5J5sSZHEeWjSJUy2aREuQ" key="C_FILENAME" value="CalculateRecallPrecision.cpp"/>
+        </eAnnotations>
+        <eAnnotations xmi:id="_Vd4-cCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/c/documentation">
+          <details xmi:id="_Vd5lgCZHEeWjSJUy2aREuQ" key="documentation" value="ID: jijie.w1&#xA;PROG:&#xA;LANG: C++&#xA;"/>
+        </eAnnotations>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_U6QF4CZHEeWjSJUy2aREuQ" name="PrintUsage" visibility="private" specification="_U6cTICZHEeWjSJUy2aREuQ">
+          <ownedParameter xmi:id="_Wcn3kCZHEeWjSJUy2aREuQ" name="" type="_umMdEDBmEeC3ksERX4P2Ow" direction="return"/>
+          <language>C</language>
+          <body>{
+	cout &lt;&lt; &quot;Usage:&quot; &lt;&lt; endl;
+	cout &lt;&lt; &quot;./CalculateRecallPrecision groundtruth consensusfile mz_th[default:0.1][recommend:0.1~0.5]&quot; &lt;&lt; endl;
+}</body>
+        </ownedBehavior>
+        <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_U6evYCZHEeWjSJUy2aREuQ" name="main" visibility="private" specification="_U6ldECZHEeWjSJUy2aREuQ">
+          <ownedParameter xmi:id="_WcpFsCZHEeWjSJUy2aREuQ" name="argc" type="_4IaaMDBmEeC3ksERX4P2Ow"/>
+          <ownedParameter xmi:id="_WcpswCZHEeWjSJUy2aREuQ" name="argv" type="_U6hLoCZHEeWjSJUy2aREuQ"/>
+          <ownedParameter xmi:id="_WcqT0CZHEeWjSJUy2aREuQ" name="" type="_4IaaMDBmEeC3ksERX4P2Ow" direction="return"/>
+          <language>C</language>
+          <body>{
+	if(argc==1){PrintUsage(); return 0;}
+
+	string groundtruthfile, consensusfile;
+	double mz_th = 0.1;
+	if (argc == 3)
+	{
+		groundtruthfile = argv[1];// input groundtruth
+		consensusfile = argv[2];
+		mz_th = 0.1;
+	}
+	else if(argc == 4)
+	{
+        groundtruthfile = argv[1];// input groundtruth
+		consensusfile = argv[2];
+		mz_th = stod(argv[3]);
+
+		string x = &quot;23&quot;;
+
+
+
+	}
+	else
+	{
+		PrintUsage();
+		return 0;
+	}
+
+
+	FileReader::groundtruthReader * groundtruth = new FileReader::groundtruthReader(groundtruthfile);
+	groundtruth->parse();
+	groundtruth->Set_mz_threshold(mz_th);
+
+	FileReader::ConsensusReader * consensus = new FileReader::ConsensusReader(consensusfile);
+	consensus->parse();
+	consensus->Set_mz_threshold(mz_th);
+
+
+	groundtruth->ValidateConsensus(consensus);
+	groundtruth->CalculateRecallPrecision(consensus);
+	consensus->ValidateConsensus(groundtruth);
+	groundtruth->CalculateRecallPrecision(consensus);
+
+	return 0;
+}</body>
+        </ownedBehavior>
+        <ownedOperation xmi:id="_U6cTICZHEeWjSJUy2aREuQ" name="PrintUsage" visibility="private" method="_U6QF4CZHEeWjSJUy2aREuQ">
+          <ownedParameter xmi:id="_U6dhQCZHEeWjSJUy2aREuQ" name="" type="_umMdEDBmEeC3ksERX4P2Ow" direction="return"/>
+        </ownedOperation>
+        <ownedOperation xmi:id="_U6ldECZHEeWjSJUy2aREuQ" name="main" visibility="private" method="_U6evYCZHEeWjSJUy2aREuQ">
+          <ownedParameter xmi:id="_U6mEICZHEeWjSJUy2aREuQ" name="argc" type="_4IaaMDBmEeC3ksERX4P2Ow"/>
+          <ownedParameter xmi:id="_U6mrMCZHEeWjSJUy2aREuQ" name="argv" type="_U6hLoCZHEeWjSJUy2aREuQ"/>
+          <ownedParameter xmi:id="_U6nSQCZHEeWjSJUy2aREuQ" name="" type="_4IaaMDBmEeC3ksERX4P2Ow" direction="return"/>
+        </ownedOperation>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U52dQCZHEeWjSJUy2aREuQ" name="iostream" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U50oECZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U54ScCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U54ScSZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U545gSZHEeWjSJUy2aREuQ" name="vector" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U545gCZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U545giZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U545gyZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U545hSZHEeWjSJUy2aREuQ" name="stdio" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U545hCZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U545hiZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U55gkCZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U55gkiZHEeWjSJUy2aREuQ" name="math" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U55gkSZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U55gkyZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U55glCZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U55gliZHEeWjSJUy2aREuQ" name="algorithm" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U55glSZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U56HoCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U56HoSZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U56HoyZHEeWjSJUy2aREuQ" name="queue" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U56HoiZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U56HpCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U56HpSZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U56HpyZHEeWjSJUy2aREuQ" name="map" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U56HpiZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U56usCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U56usSZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U56usyZHEeWjSJUy2aREuQ" name="set" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U56usiZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U56utCZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U56utSZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U57VwCZHEeWjSJUy2aREuQ" name="cstdlib" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U56utiZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U57VwSZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U57VwiZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U57VxCZHEeWjSJUy2aREuQ" name="string" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U57VwyZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U57VxSZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U57VxiZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U5780SZHEeWjSJUy2aREuQ" name="memory" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U5780CZHEeWjSJUy2aREuQ">
+        <eAnnotations xmi:id="_U5780iZHEeWjSJUy2aREuQ" source="http://www.eclipse.org/umlgen/annotation/c">
+          <details xmi:id="_U5780yZHEeWjSJUy2aREuQ" key="STD_LIBRARY" value="true"/>
+        </eAnnotations>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Usage" xmi:id="_U58j4CZHEeWjSJUy2aREuQ" name="../FileReader" visibility="private" client="_U5DMACZHEeWjSJUy2aREuQ" supplier="_U5781CZHEeWjSJUy2aREuQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_Utn6QWmtEd-Hi4dLzjZ7BQ" name="Types">
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_umMdEDBmEeC3ksERX4P2Ow" name="void"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_1V1k4DBmEeC3ksERX4P2Ow" name="char"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_4IaaMDBmEeC3ksERX4P2Ow" name="int"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-Gwn8DBmEeC3ksERX4P2Ow" name="short"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_8yzckThEEeCCiOmwUXA8rg" name="long"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-l81MDhEEeCCiOmwUXA8rg" name="double"/>
+      <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_AKRHoDhFEeCCiOmwUXA8rg" name="float"/>
+      <packagedElement xmi:type="uml:DataType" xmi:id="_U6hLoCZHEeWjSJUy2aREuQ" name="char*[]" visibility="public" redefinedClassifier="_1V1k4DBmEeC3ksERX4P2Ow"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_WDwmwGmtEd-Hi4dLzjZ7BQ" name="Libs">
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U50oECZHEeWjSJUy2aREuQ" name="iostream"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U545gCZHEeWjSJUy2aREuQ" name="vector"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U545hCZHEeWjSJUy2aREuQ" name="stdio"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U55gkSZHEeWjSJUy2aREuQ" name="math"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U55glSZHEeWjSJUy2aREuQ" name="algorithm"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U56HoiZHEeWjSJUy2aREuQ" name="queue"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U56HpiZHEeWjSJUy2aREuQ" name="map"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U56usiZHEeWjSJUy2aREuQ" name="set"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U56utiZHEeWjSJUy2aREuQ" name="cstdlib"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U57VwyZHEeWjSJUy2aREuQ" name="string"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U5780CZHEeWjSJUy2aREuQ" name="memory"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_U5781CZHEeWjSJUy2aREuQ" name="../FileReader"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_9yv5kIBoEduoHLDxP0HEYA" name="Component View">
+    <packagedElement xmi:type="uml:Component" xmi:id="_P8KOQNCzEdukztvu02l7OQ" name="AComponent Diagram by process"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_-mdtwNCyEdukztvu02l7OQ" name="Deployment View"/>
+</uml:Model>
