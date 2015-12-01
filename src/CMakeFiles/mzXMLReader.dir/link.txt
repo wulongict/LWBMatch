@@ -1,1 +1,0 @@
-/usr/bin/c++    -O3 -std=c++11 -fpermissive -Wunused-result -lz  CMakeFiles/mzXMLReader.dir/ReadmzXML.cpp.o  -o mzXMLReader  -L/data/wulong/bitbucket/codepublish/src/../librarymsms  -L/usr/local/lib -rdynamic -lz -pthread -lmsms -lboost_program_options -Wl,-rpath,/data/wulong/bitbucket/codepublish/src/../librarymsms:/usr/local/lib 

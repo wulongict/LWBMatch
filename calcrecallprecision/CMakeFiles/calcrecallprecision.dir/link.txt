@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11   CMakeFiles/calcrecallprecision.dir/CalculateRecallPrecision.cpp.o  -o calcrecallprecision -rdynamic 
