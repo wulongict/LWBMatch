@@ -53,7 +53,7 @@ FileFilter -threads 18 -in_type mzML -in [outputname].tmp.mzML -out [outputname]
 ```
 FeatureFinderCentroided -threads 18 -in [outputname].mzML -out [outputname].featureXML
 ```
-### 3. Run lwbmatch
+### 3. Run LWBMatch
 #### 3.1 Create input featureXMLList
 FileName: test.featureXML  
 Write the two lines into this file, replace the /path/to/outputname with your own filename 
@@ -61,11 +61,11 @@ Write the two lines into this file, replace the /path/to/outputname with your ow
 /path/to/outputname1.featureXML
 /path/to/outputname2.featureXML
 ```
-#### 3.2 Run lwbmatch with DTW
+#### 3.2 Run LWBMatch with DTW
 ```
 ./lwbmatch -l /path/to/test.featureXML -w 2
 ```
-#### 3.3 Run lwbmatch with LOWESS (old version)
+#### 3.3 Run LWBMatch with LOWESS (old version)
 ```
 ./lwbmatch -l /path/to/test.featureXML -w 1
 ```
