@@ -24,7 +24,7 @@ If you have any question about this manual, feel free to ask lwuai @ connect [do
 - Boost (Version >= 1.52)
 - CMake (Version >= 3.2)
 
-### Commandlines for build:
+### Command lines for build:
 
 ```
 $ cd /path/to/sourcecode
@@ -36,7 +36,7 @@ Then we get **_lwbmatch, groundtruth_** and **_calcrecallprecision_** in /path/t
 
 ----------------------------------------------
 
-## Data Analysis: Run Test data set step by step
+## Data Analysis: Run test data set step by step
 
 ### 1. Download and unzip dataset: 
 ```
