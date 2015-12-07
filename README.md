@@ -5,7 +5,7 @@
 A profile-based and feature-based hybrid algorithm for retention time alignment of SWATH MS data
 
 Date: Dec. 1, 2015  
-Authors: Long Wu, Henry Lam
+Authors: Long Wu, Sabine Amon, Henry Lam
 
 If you have any question about this manual, feel free to ask lwuai @ connect [dot] ust [dot] hk for help. 
 
