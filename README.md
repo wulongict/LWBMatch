@@ -65,6 +65,7 @@ Write the two lines into this file, replace the /path/to/outputname with your ow
 ```
 $ ./lwbmatch -l /path/to/test.featureXML -w 2
 ```
+Attention: To run LWBMatch successfully, both the mzXML and featureXML of the two replicates are needed. LWBMatch need to mzXML to calculate do the first phase alignment by DTW on MS1 spectra.
 #### 3.3 Run LWBMatch with LOWESS (old version)
 ```
 $ ./lwbmatch -l /path/to/test.featureXML -w 1
