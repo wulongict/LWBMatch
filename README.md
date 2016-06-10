@@ -7,7 +7,7 @@ A profile-based and feature-based hybrid algorithm for retention time alignment 
 Date: Dec. 1, 2015  
 Authors: Long Wu, Sabine Amon, Henry Lam
 
-If you have any question about this manual, feel free to ask lwuai @ connect [dot] ust [dot] hk for help. 
+If you have any question about this manual, feel free to ask lwuai @ connect [dot] ust [dot] hk for help.
 
 ----------------------------------------------------------
 
@@ -20,7 +20,7 @@ If you have any question about this manual, feel free to ask lwuai @ connect [do
 
 
 ## Build / Compile from source code
-### Pre-requirment, 
+### Pre-requirment,
 - Boost (Version >= 1.52)
 - CMake (Version >= 3.2)
 
@@ -38,7 +38,7 @@ Then we get **_lwbmatch, groundtruth_** and **_calcrecallprecision_** in /path/t
 
 ## Data Analysis: Run test data set step by step
 
-### 1. Download and unzip dataset: 
+### 1. Download and unzip dataset:
 ```
 $ wget http://nesvilab.org/tsouc/DIA_Umpire_SampleDataUPS.zip
 $ unzip DIA_Umpire_SampleDataUPS.zip
@@ -56,7 +56,7 @@ $ FeatureFinderCentroided -threads 18 -in [outputname].mzML -out [outputname].fe
 ### 3. Run LWBMatch
 #### 3.1 Create input featureXMLList
 FileName: test.featureXML  
-Write the two lines into this file, replace the /path/to/outputname with your own filename 
+Write the two lines into this file, replace the /path/to/outputname with your own filename
 ```
 /path/to/outputname1.featureXML
 /path/to/outputname2.featureXML
@@ -75,9 +75,9 @@ $ ./lwbmatch -l /path/to/test.featureXML -w 1
 ```
 $ java -jar -Xmx16G /path/to/DIA_Umpire_SE.jar inputmzXML  [diaumpire_configurefile]
 ```
-There will be three mzXML with Q1 ~ Q3 in name, we use one with Q1. 
+There will be three mzXML with Q1 ~ Q3 in name, we use one with Q1.
 
-**Instructions for downloading DIA-Umpire and its default parameter [diaumpire_configurefile]** 
+**Instructions for downloading DIA-Umpire and its default parameter [diaumpire_configurefile]**
 
 - Find `diaumpire_configurefile` from [this page](http://sourceforge.net/projects/diaumpire/files/Parameter%20files/)  
 	Fileanme: diaumpire.se_params
@@ -97,7 +97,7 @@ $ /path/to/comet -P[parameterfile] [inputfile1_Q1.mzXML] [inputfile2_Q1.mzXML]
 ```
 
 - Find Comet from [this page](http://sourceforge.net/projects/comet-ms/files/)  
-  
+
 	We use comet version 2013.01 rev. 0
 
 #### 4.4 Filter by xinteract , to get [*.ipro.pep.xml] (TPP required)
