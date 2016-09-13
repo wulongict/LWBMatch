@@ -40,31 +40,40 @@
 #include <cstdlib>
 #include <string.h>
 #include <memory.h>
+
 using namespace std;
 
 
-class DTW
-{
-    public:
-	enum ScoreFuntions{SPC,SIGMOD};
-	
-	FeatureMap runDTW(double th_RT,double th_MZ,double th_intensity);
-	void applyMemory(int featureNum);
-	int makeConsensus(FeatureMap &reference, FeatureMap &sample);
-	double DynamicTimeWarpping(FeatureMap &reference ,FeatureMap & sample);
-	int score_func(Feature &reference_s, Feature &query_s, ScoreFuntions sf);
-	int sharePeakCount(Feature & f1, Feature &f2);
-	int sigmod(Feature & f1, Feature &f2);
-	int getMapIDWithHighestFeatureNumbers();
-	
-	static const long long MAXN = 200005l;
-	double th_RT, th_MZ, th_intensity;
-	int sampleNum;
-	vector<FeatureMap> samples;
-	int (*weightMat)[MAXN];
-	int match1[MAXN],match2[MAXN];
-	
-	
+class DTW {
+public:
+    enum ScoreFuntions {
+        SPC, SIGMOD
+    };
+
+    FeatureMap runDTW(double th_RT, double th_MZ, double th_intensity);
+
+    void applyMemory(int featureNum);
+
+    int makeConsensus(FeatureMap &reference, FeatureMap &sample);
+
+    double DynamicTimeWarpping(FeatureMap &reference, FeatureMap &sample);
+
+    int score_func(Feature &reference_s, Feature &query_s, ScoreFuntions sf);
+
+    int sharePeakCount(Feature &f1, Feature &f2);
+
+    int sigmod(Feature &f1, Feature &f2);
+
+    int getMapIDWithHighestFeatureNumbers();
+
+    static const long long MAXN = 200005l;
+    double th_RT, th_MZ, th_intensity;
+    int sampleNum;
+    vector<FeatureMap> samples;
+    int (*weightMat)[MAXN];
+    int match1[MAXN], match2[MAXN];
+
+
 };
 
 #endif // DTW_H

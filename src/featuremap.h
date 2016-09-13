@@ -32,9 +32,14 @@
 
 using namespace std;
 
-class Feature{
-    public: 
-    double rt,mz,intensity;
+class Feature {
+    // Question: Why each feature could be both one single feature, rt, mz, intensity
+    // and could also be a list of feature RTlist, mzlist, intlist?
+    // This is used for making consensus set.
+    // Inherited from Jijie's code.
+
+public:
+    double rt, mz, intensity;
     int consensusNum;
     string peptideSequence;
     vector<string> FileList;
@@ -43,17 +48,43 @@ class Feature{
     vector<double> IntList;
 };
 
-class FeatureMap{
-    public:
-	//ToDo: It's crash when  we try to use features.clear()
-	//I thought the bug is : use the vector before it is initialized.
-		FeatureMap();
-    vector <Feature> features;
-    int featureNum;
+class FeatureMap {
+public:
+    //ToDo: It's crash when  we try to use features.clear()
+    //I thought the bug is : use the vector before it is initialized.
+    FeatureMap();
+
+    vector<Feature> features;
+    int m_featureNum;
+
     void sortByMZ();
+
     void sortByRT();
-    void readFeatureMap(char * FileName);
+
+    void readFeatureMap(char *FileName);
+//    {
+//        if (contains(FileName, "features.tsv"))
+//        {
+//            readFeatureMapDinosaur(FileName);
+//        }
+//        else if (contains(FileName, "featureXML"))
+//        {
+//            readFeatureMapFeatureXML(FileName);
+//        }
+//        else
+//        {
+//            throw "[Error] Invalid feature file type.";
+//        }
+//    }
+
+    void readFeatureMapFeatureXML1(char *FileName);
+
+    vector<double> splitAsDouble(char *line);
+
+    void readFeatureMapDinosaur(char *FileName);
 };
+
+// Now we add another FeatureMap Reader for Dinosaur feautre
 
 
 #endif // FEATUREMAP_H

@@ -17,7 +17,7 @@ public:
 
     int GetSwathCycleNum(mzXMLFilename f);
 
-    vector<PeakList*> ReadSWATHmzXMLToPeakLists(mzXMLFilename f, int currentcyclenum, int cycle);
+    vector<PeakList *> ReadSWATHmzXMLToPeakLists(mzXMLFilename f, int currentcyclenum, int cycle);
 };
 
 

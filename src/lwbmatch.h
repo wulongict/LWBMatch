@@ -47,7 +47,6 @@
 using namespace std;
 
 
-
 //par
 const int INF = 1000000000;
 
@@ -65,39 +64,47 @@ const int INF = 1000000000;
 
 
 
-class LWBMatch
-{
-    public:
-    LWBMatch(WeightMatrix *Mat){M = Mat;}
-    ~LWBMatch(){if (M!=NULL) delete M;
-    if(lowessModel!=NULL)delete lowessModel;}
-	FeatureMap runLWBMatch();
-	bool hierarchicalClustering(int clusteringResult[][2]);
-	int kuhn_munkras(int m,int n,int* match1,int* match2);
-	//LOWESSData alignmentLC(FeatureMap *reference, FeatureMap * sample);
-	void applyMemory(int featureNum);
-	void createWeightMatrix(FeatureMap *reference, FeatureMap * sample);
-	int makeConsensus(FeatureMap &reference, FeatureMap &sample);
-	//double searchForPotentialRTShifts(FeatureMap *reference, FeatureMap *sample, int &length, int max_rt,vector<LOWESS_node> &Nodes);
+class LWBMatch {
+public:
+    LWBMatch(WeightMatrix *Mat) { M = Mat; }
 
-    short int GetWeight(int i, int j){
+    ~LWBMatch() {
+        if (M != NULL) delete M;
+        if (lowessModel != NULL)delete lowessModel;
+    }
+
+    FeatureMap runLWBMatch();
+
+    bool hierarchicalClustering(int clusteringResult[][2]);
+
+    int kuhn_munkras(int m, int n, int *match1, int *match2);
+
+    //LOWESSData alignmentLC(FeatureMap *reference, FeatureMap * sample);
+    void applyMemory(int featureNum);
+
+    void createWeightMatrix(FeatureMap *reference, FeatureMap *sample);
+
+    int makeConsensus(FeatureMap &reference, FeatureMap &sample);
+    //double searchForPotentialRTShifts(FeatureMap *reference, FeatureMap *sample, int &length, int max_rt,vector<LOWESS_node> &Nodes);
+
+    short int GetWeight(int i, int j) {
         //return weightMat[i][j];
         //Position p(0,0);
-        return M->GetVal(Position(i,j));
+        return M->GetVal(Position(i, j));
 
     }
-    void SetWeight(int i, int j, short int w)
-    {
+
+    void SetWeight(int i, int j, short int w) {
         //weightMat[i][j] = w;
         //Position p(0,0);
-        M->PushVal(Position(i,j),w);
+        M->PushVal(Position(i, j), w);
     }
 
-	int sampleNum;
-	vector<FeatureMap> samples;
-	double th_RT, th_MZ, th_intensity;
-	//short int (*weightMat)[MAXN]; // another method is use in WeightMatrix by Polymorphism
-	int match1[MAXN],match2[MAXN];
+    int sampleNum;
+    vector<FeatureMap> samples;
+    double th_RT, th_MZ, th_intensity;
+    //short int (*weightMat)[MAXN]; // another method is use in WeightMatrix by Polymorphism
+    int match1[MAXN], match2[MAXN];
     WeightMatrix *M;
 
     LOWESS *lowessModel;

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(libmsms)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -fpermissive ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -std=c++11 -fpermissive -fopenmp ")
 set (CMAKE_CXX_LINK_FLAGS "-lz")
 
 

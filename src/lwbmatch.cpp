@@ -265,7 +265,7 @@ int node_num;
 //// This function is bad, please validate it.
 //void UpdateCounter(FeatureMap *sample, int *counter, double curRT, double curMZ, double max_rt, double max_mz,
 //                   int RT_binSize, int middlePoint) {
-//    for (int j = 0; j < sample->featureNum; j++) {
+//    for (int j = 0; j < sample->m_featureNum; j++) {
 //        if (isInWindow(sample->features[j].rt, sample->features[j].mz, curRT, curMZ, max_rt, max_mz)) {
 //            int RTBinNum = (curRT - sample->features[j].rt) / RT_binSize + middlePoint;
 //            counter[RTBinNum]++;
@@ -300,8 +300,8 @@ void LWBMatch::createWeightMatrix(FeatureMap *reference, FeatureMap *sample) {
     int i, j;
     int index = 0;
 
-    for (i = 0; i < sample->featureNum; i++) {
-        for (j = 0; j < reference->featureNum; j++) {
+    for (i = 0; i < sample->m_featureNum; i++) {
+        for (j = 0; j < reference->m_featureNum; j++) {
             //                  weightMat[i][j]=calcScore(reference.features[i],sample.features[j]);
             short int w = calcScore2(&(sample->features[i]), &(reference->features[j]), th_RT, th_MZ,
                                      th_intensity);// delete now
@@ -315,11 +315,11 @@ void LWBMatch::createWeightMatrix(FeatureMap *reference, FeatureMap *sample) {
 }
 
 void LWBMatch::applyMemory(int featureNum) {
-    cout << "[Info] Applying memory..." << endl;
+    cout << "[Info] Allocating memory..." << endl;
     M->InitMatrix(featureNum);
     // commentby lwu: Why use MAXN here? can not understand
     //weightMat = 0;
-    //weightMat = (short int(*)[MAXN])malloc(sizeof(short int)*(featureNum*MAXN));// delete
+    //weightMat = (short int(*)[MAXN])malloc(sizeof(short int)*(m_featureNum*MAXN));// delete
 
     //if (weightMat == 0) cout << "Apply memory unsuccessfully" << endl;
     //else cout << "Apply memory successfully" << endl;
@@ -344,13 +344,14 @@ bool LWBMatch::hierarchicalClustering(int clusteringResult[][2]) {
     Edge edge;
     edges.clear();
     vector<LOWESS_node> Nodes;
+//    cout << "sample num" << sampleNum << endl;
     //calc difference between each pair
     for (int i = 0; i < sampleNum; i++) {
         clusterFlag[i] = 1;
         for (int j = i + 1; j < sampleNum; j++) {
             LowessDewarper *lwp = new LowessDewarper(samples[i], samples[j]);
             double deviation = lwp->searchForPotentialRTShifts(&samples[i], &samples[j], length, 2500, Nodes, th_MZ);
-            if (samples[i].featureNum > samples[j].featureNum) edge.from = i, edge.to = j;
+            if (samples[i].m_featureNum > samples[j].m_featureNum) edge.from = i, edge.to = j;
             else edge.from = j, edge.to = i;
             edge.weight = deviation;
             edges.push_back(edge);
@@ -364,7 +365,8 @@ bool LWBMatch::hierarchicalClustering(int clusteringResult[][2]) {
     for (int i = 0; i < edges.size(); i++) {
         if (clusterFlag[edges[i].from] && clusterFlag[edges[i].to]) {
             clusteringResult[index][0] = edges[i].from;
-            clusteringResult[index++][1] = edges[i].to;
+            clusteringResult[index][1] = edges[i].to;// what is index++?
+            index++;
             clusterFlag[edges[i].to] = 0;
         }
     }
@@ -379,7 +381,7 @@ bool LWBMatch::hierarchicalClustering(int clusteringResult[][2]) {
 //    // lowess_ys
 //    // eps
 //    // max()
-//	for (int i = 0; i < sample.featureNum; i++) {
+//	for (int i = 0; i < sample.m_featureNum; i++) {
 //		int p = lower_bound(lowess_x, lowess_x + node_num, sample.features[i].rt) - lowess_x;
 //		double line_k, line_b, line_y;
 //		if (p == node_num) line_y = lowess_ys[node_num - 1];
@@ -401,11 +403,12 @@ bool LWBMatch::hierarchicalClustering(int clusteringResult[][2]) {
 //}
 
 int LWBMatch::makeConsensus(FeatureMap &reference, FeatureMap &sample) {
+
     cout << "[Info] Making consensus..." << endl;
     int matches = 0;
 
     //combine common features in both maps
-    for (int i = 0; i < reference.featureNum; i++) {
+    for (int i = 0; i < reference.m_featureNum; i++) {
         if (match2[i] != -1) {
             if (GetWeight(match2[i], i) != 0) {
                 matches++;
@@ -438,14 +441,14 @@ int LWBMatch::makeConsensus(FeatureMap &reference, FeatureMap &sample) {
     }
 
     //add features only in sample to reference
-    for (int i = 0; i < sample.featureNum; i++) {
+    for (int i = 0; i < sample.m_featureNum; i++) {
         if (match1[i] == -1 || (match1[i] != -1 && (GetWeight(i, match1[i]) == 0))) {
             reference.features.push_back(sample.features[i]);
-            reference.featureNum++;
+            reference.m_featureNum++;
         }
     }
     if (debugPar) {
-        for (int i = 0; i < reference.featureNum; i++) {
+        for (int i = 0; i < reference.m_featureNum; i++) {
             for (int k = 0; k < reference.features[i].consensusNum; k++) {
 
                 printf("%-20.3lf%-20.3lf%-20.3lf", reference.features[i].RTList[k], reference.features[i].MZList[k],
@@ -459,7 +462,7 @@ int LWBMatch::makeConsensus(FeatureMap &reference, FeatureMap &sample) {
 }
 
 // Lwu: Read this one, There are three functions. First:
-FeatureMap  LWBMatch::runLWBMatch() {
+FeatureMap LWBMatch::runLWBMatch() {
     parameters *pParam = parameters::GetParam();
     this->th_RT = pParam->getTh_RT();
     this->th_MZ = pParam->getTh_MZ();
@@ -472,36 +475,42 @@ FeatureMap  LWBMatch::runLWBMatch() {
     hierarchicalClustering(clusteringResult);
     cout << "[Info] Start alignment" << endl;
     for (int t = 0; t < sampleNum - 1; t++) {
+
         min_x = clusteringResult[t][0];
         min_y = clusteringResult[t][1];
 
         //the id for the map with more features should be put in min_y
-        if (samples[min_x].featureNum > samples[min_y].featureNum) swap(min_x, min_y);
+        if (samples[min_x].m_featureNum > samples[min_y].m_featureNum) swap(min_x, min_y);
 
         sample = samples[min_x];
-        reference = samples[min_y];
+        reference = samples[min_y]; // reference always contains more features than sample
 
-        cout << "[Info] Construct Dewarper" << endl;
+//        cout << "[Info] sample: " <<
 
+//        cout << "[Info] Construct Dewarper" << endl;
+//        cout << "test" << endl;
         DummyDewarper *dw = WarpingfactoryMethod(sample, reference);
-        dw->Run();
+//        cout << "OK" << endl;
+        dw->Run();                                          // profile based alignment
 
-        applyMemory(sample.featureNum);
-        memset(match1,0,sizeof(match1));
-        memset(match2,0,sizeof(match2));
+
+        // feature based alignment
+        applyMemory(sample.m_featureNum);
+        memset(match1, 0, sizeof(match1));
+        memset(match2, 0, sizeof(match2));
 
         createWeightMatrix(&reference, &sample);
-        //SparsityCalculator((short int *)weightMat,sample.featureNum*MAXN);
+        //SparsityCalculator((short int *)weightMat,sample.m_featureNum*MAXN);
         //run KM algorithm and get the matching result to establish the consensus map
 
-        int value = kuhn_munkras(sample.featureNum, reference.featureNum, match1, match2);
+        int value = kuhn_munkras(sample.m_featureNum, reference.m_featureNum, match1, match2);// feature based alignment
 
 
         int matches = makeConsensus(reference, sample);
 
         cout << "[Resu] FeatureMap " << min_x << " vs FeatureMap " << min_y << ":" << "matches->" << matches << endl;
         samples[min_x] = reference;
-        samples[min_y] = reference;
+        samples[min_y] = reference;// ToDo: why we set both minx and min y as reference?
 
     }
     return reference;
@@ -510,30 +519,33 @@ FeatureMap  LWBMatch::runLWBMatch() {
 DummyDewarper *LWBMatch::WarpingfactoryMethod(FeatureMap &sample, FeatureMap &reference) const {
     parameters *pParam = parameters::GetParam();
     DummyDewarper *dw = NULL;
-    if (pParam->getWarper() == "0")
-    {
+    if (pParam->getWarper() == "0") {
         dw = new DummyDewarper(sample, reference);
     }
 
-    else if (pParam->getWarper() == "1")
-    {
+    else if (pParam->getWarper() == "1") {
         dw = new LowessDewarper(sample, reference);
     }
 
-    else if (pParam->getWarper() == "2")
-    {
-        dw = new DTWDewarper(sample,reference);
+    else if (pParam->getWarper() == "2") {
+        dw = new DTWDewarper(sample, reference);
     }
 
-    else if (pParam->getWarper() == "3")
-    {
-        dw = new DTWDewarperMSn(sample,reference);
+    else if (pParam->getWarper() == "3") {
+        dw = new DTWDewarperMSn(sample, reference);
     }
-
-    else
-    {
+    else if (pParam->getWarper() == "4") {
+        dw = new DTWDewarperMS2(sample, reference);
+    }
+    else if (pParam->getWarper() == "5") {
+        dw = new DTWDewarperMS2InOne(sample, reference);
+    }
+    else if (pParam->getWarper() == "6") {
+        dw = new DTWDewarperMS2Rand(sample, reference);
+    }
+    else {
         dw = NULL;
-        cout << "[Error] Incorrect warping function, try [0 ~ 3] " << endl;
+        cout << "[Error] Incorrect warping function, try [0 ~ 5] " << endl;
         throw "Incorrect warping funciton";
     }
     return dw;

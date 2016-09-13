@@ -23,8 +23,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _RAMPBASE64_H
 #define _RAMPBASE64_H
 
-void b64_decode (char *dest, const char *src, int destlen);
-void b64_encode (char *dest, const char *src, int destlen);
+void b64_decode(char *dest, const char *src, int destlen);
+
+void b64_encode(char *dest, const char *src, int destlen);
 
 
 #endif /* BASE64_H */

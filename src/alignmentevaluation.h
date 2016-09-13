@@ -26,6 +26,7 @@
 
 #ifndef ALIGNMENTEVALUATION_H
 #define ALIGNMENTEVALUATION_H
+
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
@@ -325,25 +326,37 @@
 
 
 
-class AlignmentEvaluation{
-    public:
-	void runEvaluation(int methodID, double th_RT, double th_MZ, double th_intensity,int fileNum, char *fileListPath, char * outputPath, char * gtPath ,int separatePoint);
-	void runEvaluation();
-	void readFeatureMaps(const char *fileListPath);
-	void writeResults(FeatureMap *reference,const char * outputPath);
-	void evaluateConsensusMap(const char * consensusMapPath,const char *gtPath, double th_RT, double th_MZ,double th_intensity, int separatePoint);
-	void calcPrecisionAndRecall( int consensusFeatureNum,int consensusMapFileNum,int gtFeatureNum,int gtFileNum,double th_RT, double th_MZ,double th_intensity, int separatePoint);
-	void validateResult(int consensusFeatureNum,int consensusMapFileNum,int gtFeatureNum,int gtFileNum,double th_RT, double th_MZ,double th_intensity);
-	AlignmentEvaluation();
+class AlignmentEvaluation {
+public:
+    void runEvaluation(int methodID, double th_RT, double th_MZ, double th_intensity, int fileNum, char *fileListPath,
+                       char *outputPath, char *gtPath, int separatePoint);
 
-    private:
-	int fileNum;
-	char fileName[100][500],shortFileName[100][500];
-	vector<FeatureMap> samples;
-	FeatureMap consensusMap;
-	vector< vector< Feature> > consensus,gt;
-	map <int, int> consensus2gt,gt2consensus;
-        bool gtHasConsensus[100];
-	bool matched[100][100][10000];
+    void runEvaluation();
+
+    void readFeatureMaps(const char *fileListPath);
+
+    void writeResults(FeatureMap *reference, const char *outputPath);
+
+    void evaluateConsensusMap(const char *consensusMapPath, const char *gtPath, double th_RT, double th_MZ,
+                              double th_intensity, int separatePoint);
+
+    void calcPrecisionAndRecall(int consensusFeatureNum, int consensusMapFileNum, int gtFeatureNum, int gtFileNum,
+                                double th_RT, double th_MZ, double th_intensity, int separatePoint);
+
+    void validateResult(int consensusFeatureNum, int consensusMapFileNum, int gtFeatureNum, int gtFileNum, double th_RT,
+                        double th_MZ, double th_intensity);
+
+    AlignmentEvaluation();
+
+private:
+    int fileNum;
+    char fileName[100][500], shortFileName[100][500];// The filenames are here.
+    vector<FeatureMap> samples;
+    FeatureMap consensusMap;
+    vector<vector<Feature> > consensus, gt;
+    map<int, int> consensus2gt, gt2consensus;
+    bool gtHasConsensus[100];
+    bool matched[100][100][10000];
 };
+
 #endif // ALIGNMENTEVALUATION_H

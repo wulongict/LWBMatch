@@ -34,7 +34,7 @@
 using namespace std;
 
 //class LWOESSData;
-class LOWESSData{
+class LOWESSData {
     // double lowess_x[MAXN], lowess_y[MAXN], lowess_rw[MAXN], lowess_ys[MAXN], lowess_res[MAXN];
     vector<double> m_lowess_x;
     vector<double> m_lowess_y;
@@ -42,9 +42,11 @@ class LOWESSData{
     vector<double> m_lowess_ys;
     vector<double> m_lowess_res;
 public:
-    LOWESSData(){}
-    ~LOWESSData(){}
-    LOWESSData(const LOWESSData & other){
+    LOWESSData() {}
+
+    ~LOWESSData() {}
+
+    LOWESSData(const LOWESSData &other) {
         setM_lowess_x(other.getM_lowess_x());
         setM_lowess_ys(other.getM_lowess_ys());
         setM_lowess_y(other.getM_lowess_y());
@@ -95,13 +97,12 @@ public:
 };
 
 
-
-class LOWESS{
-    public:
-	    void lowess( int n,	double f, int nsteps, double delta,LOWESSData &ld);
+class LOWESS {
+public:
+    void lowess(int n, double f, int nsteps, double delta, LOWESSData &ld);
 };
 
-class DummyLowess{
+class DummyLowess {
 public:
     int getM_n() const {
         return m_n;
@@ -141,16 +142,13 @@ private:
     int m_nsteps;
     double m_delta;
 public:
-    DummyLowess(int n, double f, int nsteps, double delta):m_n(n),m_delta(delta),m_f(f),m_nsteps(nsteps)
-    {}
-    ~DummyLowess(){}
-    virtual void Run(vector<double> &x, vector<double> &y, vector<double> &ys, vector<double> &rw, vector<double> &res)
-    {}
+    DummyLowess(int n, double f, int nsteps, double delta) : m_n(n), m_delta(delta), m_f(f), m_nsteps(nsteps) {}
+
+    ~DummyLowess() {}
+
+    virtual void
+    Run(vector<double> &x, vector<double> &y, vector<double> &ys, vector<double> &rw, vector<double> &res) {}
 };
-
-
-
-
 
 
 #endif // LOWESS_H

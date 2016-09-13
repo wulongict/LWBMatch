@@ -4,17 +4,17 @@
 
 #include "SWATHmzXMLReader.h"
 
-vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, int currentcyclenum, int cycle) {
-    cout << "[Info] Loading SWATH " << currentcyclenum << "/" << cycle << " from file " << f << endl;
+vector<PeakList *> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, int currentcyclenum, int cycle) {
+    cout << "[Info] Loading SWATH " << currentcyclenum << "/" << cycle << " from file " << f << ". " << flush;
     int emptyScan = 0;
 
-    cRamp* cramp = new cRamp(f.c_str());
+    cRamp *cramp = new cRamp(f.c_str());
     if (!cramp->OK()) {
         cout << "Cannot open file \"" << f << "\". File skipped." << endl;
         delete (cramp);
         throw "can not open file";
     }
-    rampRunInfo* runInfo = cramp->getRunInfo();
+    rampRunInfo *runInfo = cramp->getRunInfo();
 
     if (!runInfo) {
         cout << "Cannot open file \"" << f << "\". File skipped." << endl;
@@ -23,18 +23,16 @@ vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, i
 
     }
     //rampInstrumentInfo* instr = cramp->getInstrumentInfo();
-    vector<PeakList*> vpl;
-    for(int k = 1; k <= cramp->getLastScan(); k ++)
-    {
-        if((k+ cycle-currentcyclenum )%cycle != 0)  continue;
-        rampScanInfo* scanInfo = cramp->getScanHeaderInfo(k);
+    vector<PeakList *> vpl;
+    for (int k = 1; k <= cramp->getLastScan(); k++) {
+        if ((k + cycle - currentcyclenum) % cycle != 0) continue;
+        rampScanInfo *scanInfo = cramp->getScanHeaderInfo(k);
 
 
 
         // If the scan is NULL, skip this scan
-        if (!scanInfo)
-        {
-            emptyScan ++;
+        if (!scanInfo) {
+            emptyScan++;
             //cout << "[Info] Number of empty scan: " << emptyScan  << endl;
 
             vpl.push_back(NULL);
@@ -42,7 +40,7 @@ vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, i
 
             continue;
         }
-        PeakList * p = new PeakList();
+        PeakList *p = new PeakList();
         p->setRTinSeconds(scanInfo->getRetentionTimeSeconds());
 
 
@@ -50,13 +48,12 @@ vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, i
 
         //cout << k << endl;
 
-        rampPeakList* peaks = cramp->getPeakList(scanInfo->m_data.acquisitionNum);
+        rampPeakList *peaks = cramp->getPeakList(scanInfo->m_data.acquisitionNum);
         delete scanInfo;
         //cout << scanInfo->m_data.precursorScanNum<< " " << scanInfo->m_data.msLevel << endl;
-        if (!peaks)
-        {
+        if (!peaks) {
 
-            emptyScan ++;
+            emptyScan++;
             //
             vpl.push_back(p);
 
@@ -65,11 +62,10 @@ vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, i
         }
         //double sumint = 0;
 
-        for(int j = 0; j < peaks->getPeakCount(); j ++)
-        {
+        for (int j = 0; j < peaks->getPeakCount(); j++) {
             double mz = peaks->getPeak(j)->mz;
-            double intensity = (double)(peaks->getPeak(j)->intensity);
-            p->InsertPeak(mz,intensity);
+            double intensity = (double) (peaks->getPeak(j)->intensity);
+            p->InsertPeak(mz, intensity);
 
         }
         delete peaks;
@@ -78,58 +74,58 @@ vector<PeakList*> SWATHmzXMLReader::ReadSWATHmzXMLToPeakLists(mzXMLFilename f, i
 
 
     }
-    if (emptyScan>0)
-        cout << "[Info] Number of empty scan: " << emptyScan << endl;
+    if (emptyScan > 0)
+        cout << "#(Empty scan): " << emptyScan << endl;
+    else
+        cout << endl;
     delete cramp;
 
     return vpl;
 }
 
 int SWATHmzXMLReader::GetSwathCycleNum(mzXMLFilename f) {
-        cRamp* cramp = new cRamp(f.c_str());
-        if (!cramp->OK()) {
-            cout << "Cannot open file \"" << f << "\". File skipped." << endl;
-            delete cramp;
-            exit(0);
-        }
-        rampRunInfo* runInfo = cramp->getRunInfo();
+    cRamp *cramp = new cRamp(f.c_str());
+    if (!cramp->OK()) {
+        cout << "Cannot open file \"" << f << "\". File skipped." << endl;
+        delete cramp;
+        exit(0);
+    }
+    rampRunInfo *runInfo = cramp->getRunInfo();
 
-        if (!runInfo) {
-            cout << "Cannot open file \"" << f << "\". File skipped." << endl;
-            exit(0);
+    if (!runInfo) {
+        cout << "Cannot open file \"" << f << "\". File skipped." << endl;
+        exit(0);
 
-        }
-        int cycle = 0;
-        rampScanInfo *scanInfo = NULL;
-        for(int k = 1; k <= cramp->getLastScan(); k ++) {
-            if (scanInfo)
-            {
-                delete scanInfo;
-                scanInfo = NULL;
-            }
-            scanInfo = cramp->getScanHeaderInfo(k);
-            if (!scanInfo) { continue; }
-            if(scanInfo->m_data.msLevel == 1 && cycle!=0) break;
-            else cycle ++;
-
-            // If the scan is NULL, skip this scan
-
-
-            // If the msLevel is not equal to MSLEVEL, skip this scan
-            if (scanInfo->m_data.msLevel != 1) continue;
-        }
-
-        if(scanInfo)
-        {
+    }
+    int cycle = 0;
+    rampScanInfo *scanInfo = NULL;
+    for (int k = 1; k <= cramp->getLastScan(); k++) {
+        if (scanInfo) {
             delete scanInfo;
             scanInfo = NULL;
         }
+        scanInfo = cramp->getScanHeaderInfo(k);
+        if (!scanInfo) { continue; }
+        if (scanInfo->m_data.msLevel == 1 && cycle != 0) break;
+        else cycle++;
 
-        delete cramp;
-        cout << "[Resu] "<< f << ": Cycle = " << cycle << endl;
-        return  cycle;
+        // If the scan is NULL, skip this scan
 
+
+        // If the msLevel is not equal to MSLEVEL, skip this scan
+        if (scanInfo->m_data.msLevel != 1) continue;
     }
+
+    if (scanInfo) {
+        delete scanInfo;
+        scanInfo = NULL;
+    }
+
+    delete cramp;
+    cout << "[Resu] " << f << ": Cycle = " << cycle << endl;
+    return cycle;
+
+}
 
 SWATHmzXMLReader::SWATHmzXMLReader() : mzXMLReader("1") {}
 
