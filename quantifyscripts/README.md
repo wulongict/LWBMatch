@@ -69,17 +69,17 @@ python /path/to/quantifyscripts/RTQuant.py input1.mzXML input2.mzXML
 
 
 ## The workflow contains several different parts.
-1. LWBMatch.py 
+1. LWBMatch.py  
 Retention time alignment: Scan- and Feature- based retention time alignment.
 
-2. DIAumpireFlow.py 
-Purpose: For get the identified PSMs and get the ground truth map.
-2.1 Pseudo-MS2 file extraction; 
-2.2 Using Comet to search pseudo-MS2 spectra
+2. DIAumpireFlow.py  
+Purpose: For get the identified PSMs and get the ground truth map.  
+2.1 Pseudo-MS2 file extraction;   
+2.2 Using Comet to search pseudo-MS2 spectra  
 2.3 Using Xinteract to control FDR of identified PSMs.
 
-FDR: false discovery rate
-PSM: peptide spectrum match
+FDR: false discovery rate  
+PSM: peptide spectrum match  
 
 
 ----------------------------------------------
