@@ -7,7 +7,7 @@
 #include <math.h>
 #include <ctime>
 #include "parameters.h"
-#include "../librarymsms/Util.h"
+#include "../codejam/tools/librarymsms/Util.h"
 
 using namespace std;
 

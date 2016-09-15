@@ -4,7 +4,7 @@
 
 A profile-based and feature-based hybrid algorithm for retention time alignment of SWATH MS data
 
-Date: Dec. 1, 2015  
+Update: Sep. 15, 2016 
 Authors: Long Wu, Sabine Amon, Henry Lam
 
 If you have any question about this manual, feel free to ask lwuai @ connect [dot] ust [dot] hk for help.
@@ -12,33 +12,33 @@ If you have any question about this manual, feel free to ask lwuai @ connect [do
 ----------------------------------------------------------
 
 
-## Three tools are provided in this package.
+## Three tools are provided in this package
 
 1. Retention time alignment tool: **lwbmatch**
 2. Generte ground truth from identification results: **groundtruth**
-3. Recall and precision calculator: **calcrecallprecision**
+3. Recall and precision calculator: **recallprecision**
 
 
 ## Build / Compile from source code
-### Pre-requirment,
+### Requirments
 - Boost (Version >= 1.52)
 - CMake (Version >= 3.2)
+- g++ (Version >= 4.8.4)
 
 ### Command lines for build:
 
 ```
 $ cd /path/to/sourcecode
-$ cmake .
-$ make
+$ cmake .; make install
 ```
-Then we get **_lwbmatch, groundtruth_** and **_calcrecallprecision_** in /path/to/source/src, /path/to/source/groundtruth  and /path/to/source/calcrecallprecision.
+Then we get **lwbmatch**, **groundtruth** and **recallprecision** in /path/to/source/bin.
 
 
 ----------------------------------------------
 
 ## Data Analysis: Run test data set step by step
 
-### 1. Download and unzip dataset:
+### 1. Download and unzip dataset
 ```
 $ wget http://nesvilab.org/tsouc/DIA_Umpire_SampleDataUPS.zip
 $ unzip DIA_Umpire_SampleDataUPS.zip
@@ -55,7 +55,7 @@ $ FeatureFinderCentroided -threads 18 -in [outputname].mzML -out [outputname].fe
 ```
 ### 3. Run LWBMatch
 #### 3.1 Create input featureXMLList
-FileName: test.featureXML  
+FileName: test.featureXMLList
 Write the two lines into this file, replace the /path/to/outputname with your own filename
 ```
 /path/to/outputname1.featureXML
@@ -63,7 +63,7 @@ Write the two lines into this file, replace the /path/to/outputname with your ow
 ```
 #### 3.2 Run LWBMatch with DTW
 ```
-$ ./lwbmatch -l /path/to/test.featureXML -w 2
+$ ./lwbmatch -l /path/to/test.featureXMLList -w 2
 ```
 Attention: To run LWBMatch successfully, both the mzXML and featureXML of the two replicates are needed. LWBMatch need to mzXML to calculate do the first phase alignment by DTW on MS1 spectra.
 #### 3.3 Run LWBMatch with LOWESS (old version)
@@ -100,9 +100,9 @@ $ /path/to/comet -P[parameterfile] [inputfile1_Q1.mzXML] [inputfile2_Q1.mzXML]
 
 	We use comet version 2013.01 rev. 0
 
-#### 4.4 Filter by xinteract , to get [*.ipro.pep.xml] (TPP required)
-input: search result file [\*.pep.xml]  
-output: [\*.ipro.pep.xml]  
+#### 4.4 Filter by xinteract , to get *.ipro.pep.xml (TPP required)
+input: search result file \*.pep.xml
+output: \*.ipro.pep.xml
 For more information, please refer to [this page](http://sourceforge.net/projects/sashimi/files/Trans-Proteomic%20Pipeline%20(TPP)/)
 
 #### 4.5 Create ground truth from [.ipro.pep.xml]
@@ -111,7 +111,7 @@ $ /path/to/groundtruth [filename:2] [mzXMLListtxtName_contains_two_mzXML_filenam
 ```
 #### 4.6 Calculate recall and precision
 ```
-$ /path/to/calcrecallprecision [groundtruth_filename]  [RTAlignResult_with_extension_resu]  [mz_tolerance:0.1] [rt_tolerance: 1 ~ 25]
+$ /path/to/recallprecision [groundtruth_filename]  [RTAlignResult_with_extension_resu]  [mz_tolerance:0.1] [rt_tolerance: 1 ~ 25]
 ```
 
 ------------------------------------------------

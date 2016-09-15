@@ -21,3 +21,5 @@ set(SOURCE_FILES
 
 add_library(msms SHARED ${SOURCE_FILES})
 target_link_libraries(msms -lz -pthread)
+
+install(TARGETS msms DESTINATION ${PROJECT_SOURCE_DIR}/../bin)

@@ -9,3 +9,4 @@ set(SOURCE_FILES
     )
 
 add_executable(groundtruth ${SOURCE_FILES})
+install(TARGETS groundtruth DESTINATION ${PROJECT_SOURCE_DIR}/../bin)

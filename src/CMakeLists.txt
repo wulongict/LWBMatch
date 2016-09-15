@@ -18,24 +18,17 @@ set(SOURCE_FILES
     main.cpp
     SparseMatrix.h)
 
-#set( PROJECT_LINK_LIBS libmsms.so )
-link_directories( ../librarymsms/ ) # lib1.so and lib2.so are there.
+
+link_directories( ../librarymsms/ ${PROJECT_SOURCE_DIR}/../bin) # lib1.so and lib2.so are there.
 link_directories(/usr/local/lib/)
 
 add_executable(lwbmatch ${SOURCE_FILES} Dewarper.cpp Dewarper.h parameters.cpp parameters.h)
 target_link_libraries(lwbmatch -lmsms)
-add_dependencies(lwbmatch msms)
-
-
 
 add_executable(mzXMLReader ReadmzXML.cpp)
 target_link_libraries(mzXMLReader -lz -pthread -lmsms -lboost_program_options)
-#target_link_libraries(lwbmatch -lmsms)
-
-add_dependencies(mzXMLReader msms)
-
 
 add_executable(mzxmltomatrix mzXMLtomatrix.cpp)
 target_link_libraries(mzxmltomatrix -lz -pthread -lmsms -lboost_program_options)
 
-add_dependencies(mzxmltomatrix msms)
+install(TARGETS lwbmatch mzXMLReader mzxmltomatrix DESTINATION ${PROJECT_SOURCE_DIR}/../bin)
