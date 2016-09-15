@@ -12,9 +12,9 @@ If you have any question about this manual, feel free to ask lwuai @ connect [do
 
 ## Requirements
 ### System requirements
-- Operating System: Ubuntu 14.04
+- Operating System: Ubuntu 14.04  
 We will transplant the workflow for Windows platform later.
-- Memory: 32 GB or above
+- Memory: 32 GB or above  
 This requirement is to make sure we can run large mzXML (> 4GB) files successfully.
 
 
@@ -25,18 +25,18 @@ This requirement is to make sure we can run large mzXML (> 4GB) files successful
 - Matplotlib (Tested Version 1.5.0)
 
 ### Third party software tools
-- DIA-Umpire [Download](http://sourceforge.net/projects/diaumpire/files/Parameter%20files/)
+- DIA-Umpire [Download](http://sourceforge.net/projects/diaumpire/files/Parameter%20files/)  
 To extract pseudo-MS2 spectra from SWATH data. The parameter should also be provided.
 
 
-- Comet [Download](http://sourceforge.net/projects/comet-ms/files/)
+- Comet [Download](http://sourceforge.net/projects/comet-ms/files/)  
 To search pseudo-MS2 spectra against a sequence database.
 
-- Xinteract (from TPP) [Download](http://sourceforge.net/projects/sashimi/files/Trans-Proteomic%20Pipeline%20(TPP)/)
+- Xinteract (from TPP) [Download](http://sourceforge.net/projects/sashimi/files/Trans-Proteomic%20Pipeline%20(TPP)/)  
 To control FDR and report the identified peptides/proteins above a FDR threshold
 
 
-- OpenMS [Download](https://github.com/OpenMS/OpenMS)
+- OpenMS [Download](https://github.com/OpenMS/OpenMS)  
 To extract the features from given SWATH MS data file. The features are used for retention time alignment and quantification. There are three tools used in our workflow including FeatureFinderCentroided, FileConverter, and FileFilter
 
 
