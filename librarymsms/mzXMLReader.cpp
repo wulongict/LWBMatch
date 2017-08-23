@@ -184,7 +184,7 @@ void mzXMLReader::CalcDotProduct(vector<PeakList *> &a, const vector<PeakList *>
 //    cout << "[Info] Maximal scan deviation: " << max_scan_diff << endl;
     for (int i = 0; i < a.size(); i += MinSize) {
         tasks.push_back(std::thread(
-                bind(&mzXMLReader::CalculateDotProduct, mzXMLReader(MSLEVEL), a, b, i, i + MinSize, k++, res)));
+                ::std::bind(&mzXMLReader::CalculateDotProduct, mzXMLReader(MSLEVEL), a, b, i, i + MinSize, k++, res)));
     }
     for (int i = 0; i < threadNum; ++i) {
         tasks[i].join();

@@ -17,6 +17,7 @@
 #include <thread>
 #include "Util.h"
 #include <random>     /* srand, rand */
+#include <functional>
 
 typedef string mzXMLFilename;
 

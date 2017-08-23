@@ -5,6 +5,7 @@
 #include "Dewarper.h"
 #include "parameters.h"
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
